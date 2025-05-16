@@ -4,7 +4,7 @@ import java.util.SortedSet;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.api.Violation;
+import structcheck_module.Violation;
 
 public class CheckStatementNotInMethod extends CheckTokenInMethod {
 
@@ -22,7 +22,10 @@ public class CheckStatementNotInMethod extends CheckTokenInMethod {
 	}
 
 	@Override
-	public void process() {
+	public SortedSet<Violation> process() {
+		super.process();
+		SortedSet<Violation> violations = violationIfFindTarget();
+		return violations;
 	}
 
 }

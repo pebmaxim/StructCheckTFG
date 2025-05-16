@@ -12,8 +12,8 @@ public class StructChecks {
 			// metodo Tienda.anhadeVendedor
 			new CheckStatementInMethod("Tienda.anhadeVendedor",
 					TokenTypes.LITERAL_THROWS,
-					"El método debe indicar que podría lanzar la excepción " +
-					"añadiendo el correspondiente 'throws' en su cabecera."),
+					"El metodo debe indicar que podria lanzar la excepcion " +
+					"anhadiendo el correspondiente 'throws' en su cabecera."),
 			new CheckStatementInMethod("Tienda.anhadeVendedor",
 					TokenTypes.LITERAL_IF),
 			new CheckStatementNotInMethod("Tienda.anhadeVendedor",

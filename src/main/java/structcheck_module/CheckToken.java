@@ -1,10 +1,12 @@
 package structcheck_module;
 
+import java.util.Set;
+import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.Violation;
+import structcheck_module.Violation;
 
 public abstract class CheckToken extends Check {
 	// Token to be found/not found in the base token of this check.
@@ -34,33 +36,46 @@ public abstract class CheckToken extends Check {
 	 * @param baseNode node where look for the occurrences. 
 	 * @return the nodes that match the target token of this check.
 	 */
-	private SortedSet<DetailAST> findTargetToken() {
-		// TODO
-		return null;
+	private Set<DetailAST> findTargetToken(Set<DetailAST> detectedInstances, DetailAST ast) {
+		DetailAST child = ast.getFirstChild();
+		while (child != null) { // If child is null, that means we have no more siblings to check.
+			if (child.getType() == targetToken.type()) {
+				detectedInstances.add(child);
+			}
+			if (child.hasChildren()) { // If child has no children, there's no point in exploring the next depth level.
+				detectedInstances = findTargetToken(detectedInstances, child);
+			}
+			child = child.getNextSibling();
+		}
+		return detectedInstances;
 	}
-
+	
+	/**
+	 * Creates a violation if the target token is supposed to be present.
+	 * @return A SortedSet with a violation if the token was not found or an empty SortedSet otherwise.
+	 */
 	protected SortedSet<Violation> violationIfNotFindTarget() {
-		SortedSet<DetailAST> nodes = findTargetToken();
+		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
 		
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		if (nodes.isEmpty()) {
-			// Violation found: statement not found in method
-			
-			// TODO: crea una "Violation" con la linea en la que está el método
-			// y el violationMessage y la añade a violations			
+			violations.add(new Violation(this.baseNode().getLineNo(), violationMessage()));		
 		}
 		
 		return violations;
 	}
-
+	
+	/**
+	 * Creates violations for every target token that is found where it shouldn't be.
+	 * @return A SortedSet with violations for every token spotted or an empty SortedSet otherwise.
+	 */
 	protected SortedSet<Violation> violationIfFindTarget() {
-		SortedSet<DetailAST> nodes = findTargetToken();
+		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
 
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		
 		for (DetailAST n: nodes) {
-			// TODO: crea una "Violation" con la linea a la que corresponde
-			// el nodo n y el violationMessage y la añade a violations		
+			violations.add(new Violation(n.getLineNo(), violationMessage()));
 		}
 
 		return violations;

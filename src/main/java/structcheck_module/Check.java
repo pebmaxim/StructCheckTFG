@@ -1,8 +1,10 @@
 package structcheck_module;
 
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.puppycrawl.tools.checkstyle.api.*;
+import structcheck_module.Violation;
 
 public abstract class Check {
 	// Token on which the check is performed: it can be a method, a class, etc.
@@ -16,6 +18,7 @@ public abstract class Check {
 	// Message to be displayed when a check violation is found.
 	private final String violationMessage;
 	private boolean checkCleared;
+	private SortedSet<Violation> violations;
 	
 	/**
 	 * @param baseName
@@ -26,6 +29,7 @@ public abstract class Check {
 		baseToken = new Token(baseName, baseType);
 		this.violationMessage = violationMessage;
 		this.checkCleared = false;
+		this.violations = new TreeSet<Violation>();
 	}
 	
 	/**
@@ -81,8 +85,9 @@ public abstract class Check {
 	 * if no violations are found).
 	 * XXX ¿mejor retornar null si no hay ninguna violation?
 	 */
-	public void process() {
+	public SortedSet<Violation> process() {
 		this.checkCleared = true;
+		return violations;
 	}
 	
 
