@@ -6,6 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
 import structcheck_module.Violation;
 
 public abstract class CheckToken extends Check {
@@ -78,6 +80,44 @@ public abstract class CheckToken extends Check {
 			violations.add(new Violation(n.getLineNo(), violationMessage()));
 		}
 
+		return violations;
+	}
+	
+	/**
+	 * Creates a violation if the return type of a method does not match the mandated one.
+	 * @return a violation informing the user of the problem and the place to look in.
+	 */
+	protected SortedSet<Violation> checkReturnType() {
+		SortedSet<Violation> violations = new TreeSet<Violation>();
+		if (baseNode().getType() != TokenTypes.METHOD_DEF) {
+			System.out.println("ERROR: You used checkReturnType in a CLASS_DEF node. Check your code.");
+			return null;
+		}
+		DetailAST type = baseNode().findFirstToken(TokenTypes.TYPE);
+		if (!type.getFirstChild().getText().equals(targetToken.name())) {
+			violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
+		}
+		return violations;
+	}
+	
+	/**
+	 * Creates a violation if a class does not extend the mandated interface/abstract
+	 * @return a violation informing the user of the problem and the place to look in
+	 */
+	protected SortedSet<Violation> checkExtends() {
+		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		String[] split = baseToken().name().split("\\.");
+		String name = split[split.length - 1];
+		
+		SortedSet<Violation> violations = new TreeSet<Violation>();
+		violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
+		
+		for (DetailAST n: nodes) {
+			if (n.getPreviousSibling().getText().equals(name)) {
+				violations.clear();
+			}
+		}
+		
 		return violations;
 	}
 

@@ -19,6 +19,11 @@ public class Tienda {
 	// posRankingVendedor() y eliminaVendedor() para que utilicen las excepciones
 	// como mecanismo de notificacion de errores.
 	
+	/*
+	@SuppressWarnings("serialized")
+	private class NombreYaExistente extends RuntimeException{}
+	*/
+	
 	/**
 	 * Anhade un nuevo vendedor a la tienda.
 	 * @param nuevoVendedor vendedor a anhadir

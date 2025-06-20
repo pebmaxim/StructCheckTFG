@@ -2,10 +2,6 @@ package structcheck_module;
 
 import java.util.SortedSet;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import structcheck_module.Violation;
-
 public class CheckStatementNotInMethod extends CheckTokenInMethod {
 
 	public CheckStatementNotInMethod(String methodName, int statementType,

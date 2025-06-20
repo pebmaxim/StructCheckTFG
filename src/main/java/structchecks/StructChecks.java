@@ -3,7 +3,9 @@ package structchecks;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import structcheck_module.Check;
+import structcheck_module.CheckClassExtends;
 import structcheck_module.CheckMethodInMethod;
+import structcheck_module.CheckMethodReturnType;
 import structcheck_module.CheckStatementInMethod;
 import structcheck_module.CheckStatementNotInMethod;
 
@@ -23,9 +25,9 @@ public class StructChecks {
 			// metodo Tienda.buscaVendedor
 			new CheckStatementInMethod("Tienda.buscaVendedor",
 					TokenTypes.LITERAL_FOR),
-			// TODO new CheckMethodReturnType("Tienda.buscaVendedor", "Vendedor"),
+			new CheckMethodReturnType("Tienda.buscaVendedor", "Vendedor"),
 			
 			// Declaracion excepciones
-			// TODO new CheckClassExtends("Tienda.NombreYaExistente", "RuntimeException")
+			new CheckClassExtends("Tienda.NombreYaExistente", "RuntimeException")
 	};
 }
