@@ -17,6 +17,9 @@ public class CheckMethodReturnType extends CheckTokenInMethod{
 						returnType);
 	}
 	
+	/**
+	 * Begins computation for the check.
+	 */
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();

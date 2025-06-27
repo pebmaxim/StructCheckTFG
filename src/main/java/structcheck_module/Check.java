@@ -21,8 +21,9 @@ public abstract class Check {
 	private SortedSet<Violation> violations;
 	
 	/**
-	 * @param baseName
-	 * @param baseType
+	 * @param baseName The text that defines the identification for the base token (sometimes same as type)
+	 * @param baseType What type the base token is (checkstyle uses int constants as identifiers)
+	 * @param violationMessage The message the check displays in case of a violation.
 	 */
 	public Check(String baseName, int baseType, String violationMessage) {
 		super();
