@@ -17,7 +17,7 @@ public class StructCheckMain extends AbstractCheck {
 	static {
         Check[] loadedChecks = null;
         try {
-            Class<?> configClass = Class.forName("structchecks.StructChecks");
+            Class<?> configClass = Class.forName("tests.StructChecks");
             Field checksField = configClass.getField("checks");
             loadedChecks = (Check[]) checksField.get(null);
         } catch (Exception e) {
@@ -44,7 +44,6 @@ public class StructCheckMain extends AbstractCheck {
 	 */
 	@Override
 	public void visitToken(DetailAST ast) {
-		SortedSet<Violation> violations = new TreeSet<Violation>();
 		int astType = ast.getType();
 		String astText = ast.findFirstToken(TokenTypes.IDENT).getText(); // Get the object's identification
 		for (Check check: checks) {
@@ -54,7 +53,7 @@ public class StructCheckMain extends AbstractCheck {
 			int checkType = check.baseToken().type();
 			String[] checkName = check.baseToken().name().split("\\."); // Separate the method from the class it belongs to
 			if (astType == checkType) { // If the AST and the check aren't looking in the same place, we should move on.
-				
+				SortedSet<Violation> violations = new TreeSet<Violation>();
 				// Might not be necessary to use switch
 				switch(astType) {
 					case(TokenTypes.CLASS_DEF):
@@ -72,15 +71,16 @@ public class StructCheckMain extends AbstractCheck {
 							break;
 						}
 				}
+				for (Violation violation: violations) {
+					log(violation.lineNo(), violation.message());
+				}
 			}
 					
 		}
 		/*
 		 * Loads all the violations to be printed in the terminal.
 		 */
-		for (Violation violation: violations) {
-			log(violation.lineNo(), violation.message());
-		}
+		
 	}
 	
 	/*

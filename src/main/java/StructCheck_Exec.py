@@ -11,10 +11,10 @@ This file should be located on the level of the java package folders
 user_os = sys.platform
 match user_os:
     case "win32":
-        os.system('javac -cp "checkstyle-10.21.2-all.jar;StructCheck.jar" ./structchecks/StructChecks.java')
+        os.system('javac -cp "checkstyle-10.21.2-all.jar;StructCheck.jar" ./tests/StructChecks.java')
         os.system('java -cp StructCheck.jar;checkstyle-10.21.2-all.jar;./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
     case "linux":
-        os.system('javac -cp "checkstyle-10.21.2-all.jar:StructCheck.jar" ./structchecks/StructChecks.java')
+        os.system('javac -cp "checkstyle-10.21.2-all.jar:StructCheck.jar" ./tests/StructChecks.java')
         os.system('java -cp StructCheck.jar:checkstyle-10.21.2-all.jar:./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
     case default:
         print("ERROR: The laptop is running an operating system unaccounted for in this script")

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import modelo.Vendedor;
 
 /**
  * Tienda con sus vendedores.
@@ -31,9 +32,11 @@ public class Tienda {
 	 *         false si ya habia un vendedor con el mismo nombre
 	 */
 	public boolean anhadeVendedor(Vendedor nuevoVendedor) 	{
+		/*
 		if (buscaVendedor(nuevoVendedor.nombre()) != null) {
 			return false;
 		}
+		*/
 		vendedores.add(nuevoVendedor);
 		return true;
 		
@@ -103,6 +106,10 @@ public class Tienda {
 	 * con el nombre indicado.
 	 */
 	public Vendedor eliminaVendedor(String nombre) {
+		int[] lengthTest = {1,2,3,4};
+		for (int i = 0; i < lengthTest.length; i++) {
+			
+		}
 		Vendedor vendedor = buscaVendedor(nombre);
 		if (vendedor == null) {
 			return null;
