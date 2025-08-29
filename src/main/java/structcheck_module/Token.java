@@ -15,7 +15,6 @@ public class Token {
 	}
 	
 	public Token(int type) {
-		// TODO check tokenType does not require name: LITERAL_FOR, LITERAL_IF, ...
 		this(null, type);
 	}
 

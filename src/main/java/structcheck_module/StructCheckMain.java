@@ -71,15 +71,15 @@ public class StructCheckMain extends AbstractCheck {
 							break;
 						}
 				}
+				/*
+				 * Loads all the violations to be printed in the terminal.
+				 */
 				for (Violation violation: violations) {
 					log(violation.lineNo(), violation.message());
 				}
 			}
 					
 		}
-		/*
-		 * Loads all the violations to be printed in the terminal.
-		 */
 		
 	}
 	

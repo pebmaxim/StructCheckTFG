@@ -32,11 +32,9 @@ public class Tienda {
 	 *         false si ya habia un vendedor con el mismo nombre
 	 */
 	public boolean anhadeVendedor(Vendedor nuevoVendedor) 	{
-		/*
 		if (buscaVendedor(nuevoVendedor.nombre()) != null) {
 			return false;
 		}
-		*/
 		vendedores.add(nuevoVendedor);
 		return true;
 		

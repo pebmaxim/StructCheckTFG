@@ -20,17 +20,17 @@ public class CheckMethodInMethod extends CheckTokenInMethod {
 	 */
 	public CheckMethodInMethod(String methodName, String targetMethodName,
 			String violationMessage) {
-		super(methodName, targetMethodName, TokenTypes.METHOD_DEF,
+		super(methodName, targetMethodName, TokenTypes.METHOD_CALL,
 				violationMessage);
 	}
 	
 	/**
-	 * CheckMethodInMethod constructor with custom violation message.
+	 * CheckMethodInMethod constructor without custom violation message.
 	 * @param methodName Name of the method we're looking inside of.
 	 * @param targetMethodName Name of the method we're checking is used.
 	 */
 	public CheckMethodInMethod(String methodName, String targetMethodName) {
-		super(methodName, targetMethodName, TokenTypes.METHOD_DEF,
+		super(methodName, targetMethodName, TokenTypes.METHOD_CALL,
 				"Method " + methodName + " should call method " +
 				targetMethodName);
 	}
