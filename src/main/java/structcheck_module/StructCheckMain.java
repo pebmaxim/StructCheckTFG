@@ -60,16 +60,19 @@ public class StructCheckMain extends AbstractCheck {
 						if (astText.equals(checkName[0])) {
 							check.setBaseNode(ast);
 							violations.addAll(check.process());
-							break;
 						}
+						break;
 					case(TokenTypes.METHOD_DEF):
 						// If the ast is a method, this gives us the identification of the class it belongs to.
 						String astFather = ast.getParent().getPreviousSibling().getText();
 						if (astFather.equals(checkName[0]) && astText.equals(checkName[1])) {
 							check.setBaseNode(ast);
 							violations.addAll(check.process());
-							break;
 						}
+						break;
+					default:
+						log(0,"Unexpected root token type.");
+						break;
 				}
 				/*
 				 * Loads all the violations to be printed in the terminal.

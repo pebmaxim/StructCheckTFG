@@ -2,10 +2,7 @@ package structcheck_module;
 
 import java.util.SortedSet;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import structcheck_module.Violation;
-
 /*
  * CheckMethodInMethod is used when you're looking for the use of a method
  * inside another method.

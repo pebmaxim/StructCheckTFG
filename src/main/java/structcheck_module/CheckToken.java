@@ -8,8 +8,6 @@ import java.util.TreeSet;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import structcheck_module.Violation;
-
 public abstract class CheckToken extends Check {
 	// Token to be found/not found in the base token of this check.
 	private final Token targetToken;
@@ -58,6 +56,10 @@ public abstract class CheckToken extends Check {
 	 */
 	protected SortedSet<Violation> violationIfNotFindTarget() {
 		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		
+		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
+			nodes = methodCallFilter(nodes);
+		}
 		
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		if (nodes.isEmpty()) {
@@ -119,6 +121,35 @@ public abstract class CheckToken extends Check {
 		}
 		
 		return violations;
+	}
+	
+	/**
+	 * Filters method calls based on the method name
+	 * @param nodes Set of method calls spotted
+	 * @return Set of method calls with a matching name
+	 */
+	private Set<DetailAST> methodCallFilter(Set<DetailAST> nodes) {
+		// Separating method name from its class
+		String[] split = targetToken().name().split("\\.");
+		String name = split[split.length - 1]; 
+		
+		HashSet<DetailAST> filteredNodes = new HashSet<DetailAST>();
+		
+		for (DetailAST n: nodes) {
+			// The first child is either the method name or the dot in X.method
+			DetailAST methodName = n.getFirstChild(); 
+			
+			// If the first child is the dot, then its children are an expression and then the method name.
+			if (methodName.getType() == TokenTypes.DOT) {
+				methodName = methodName.getFirstChild().getNextSibling();
+			}
+			
+			// Checking if the method name for this call is the one we are interested in
+			if (methodName.getText().equals(name)) {
+				filteredNodes.add(n);
+			}
+		}
+		return filteredNodes;
 	}
 
 }

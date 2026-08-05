@@ -4,7 +4,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.puppycrawl.tools.checkstyle.api.*;
-import structcheck_module.Violation;
 
 public abstract class Check {
 	// Token on which the check is performed: it can be a method, a class, etc.

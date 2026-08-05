@@ -2,9 +2,7 @@ package structcheck_module;
 
 import java.util.SortedSet;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import structcheck_module.Violation;
 
 /*
  * CheckTokenInMethod is used when looking for specific items inside of

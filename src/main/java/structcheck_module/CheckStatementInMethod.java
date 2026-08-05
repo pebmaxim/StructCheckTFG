@@ -2,10 +2,6 @@ package structcheck_module;
 
 import java.util.SortedSet;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import structcheck_module.Violation;
-
 /*
  * CheckStatementInMethod is used when looking for, to name an example, looping structures
  * inside of a method.
