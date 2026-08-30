@@ -61,6 +61,19 @@ public abstract class CheckToken extends Check {
 			nodes = methodCallFilter(nodes);
 		}
 		
+		if (targetToken.name() != null && targetToken.type() != TokenTypes.METHOD_CALL) {
+			boolean identCorrecto = false;
+			for (DetailAST n: nodes) {
+				if (identFinder(n).equalsIgnoreCase(targetToken.name())) {
+					identCorrecto = true;
+					break;
+				}
+			}
+			if (!identCorrecto) {
+				nodes.clear();
+			}
+		}
+		
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		if (nodes.isEmpty()) {
 			violations.add(new Violation(this.baseNode().getLineNo(), violationMessage()));		
@@ -75,11 +88,17 @@ public abstract class CheckToken extends Check {
 	 */
 	protected SortedSet<Violation> violationIfFindTarget() {
 		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		
+		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
+			nodes = methodCallFilter(nodes);
+		}
 
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		
 		for (DetailAST n: nodes) {
-			violations.add(new Violation(n.getLineNo(), violationMessage()));
+			if (targetToken.name() == null || (targetToken.name() != null &&
+					identFinder(n).equalsIgnoreCase(targetToken.name())) || targetToken.type() == TokenTypes.METHOD_CALL)
+				violations.add(new Violation(n.getLineNo(), violationMessage()));
 		}
 
 		return violations;
@@ -96,7 +115,7 @@ public abstract class CheckToken extends Check {
 			return null;
 		}
 		DetailAST type = baseNode().findFirstToken(TokenTypes.TYPE);
-		if (!type.getFirstChild().getText().equals(targetToken.name())) {
+		if (!type.getFirstChild().getText().equalsIgnoreCase(targetToken.name())) {
 			violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
 		}
 		return violations;
@@ -150,6 +169,27 @@ public abstract class CheckToken extends Check {
 			}
 		}
 		return filteredNodes;
+	}
+	
+	/**
+	 * Method for finding the identification of an item
+	 * @param node The item whose identification is currently being searched for
+	 * @return The text identifying the item or null if there isn't any
+	 */
+	private String identFinder(DetailAST node) {
+		DetailAST child = node.getFirstChild();
+		String ident = null;
+		while (child != null && ident == null) { // If child is null, that means we have no more siblings to check.
+			if (child.getType() == TokenTypes.IDENT) {
+				ident = child.getText();
+				break;
+			}
+			if (child.hasChildren()) { // If child has no children, there's no point in exploring the next depth level.
+				ident = identFinder(child);
+			}
+			child = child.getNextSibling();
+		}
+		return ident;
 	}
 
 }

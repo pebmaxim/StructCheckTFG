@@ -1,4 +1,4 @@
-import sys, os, glob
+import sys, glob, subprocess
 """
 The purpose of this script is to make the use of StructCheck simpler by automatically compiling the .java file
 containing all the checks and then executing the checkstyle. Initial version of this script supports WindowsOS and Linux.
@@ -28,10 +28,10 @@ except IndexError:
 
 match user_os:
     case "win32":
-        os.system('javac -cp "'+ cs_jar + ';'+ StructCheck_jar + '" ./tests/StructChecks.java')
-        os.system('java -cp '+ StructCheck_jar + ';'+ cs_jar + ';./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
+        subprocess.run('javac -cp "'+ cs_jar + ';'+ StructCheck_jar + '" ./tests/StructChecks.java')
+        subprocess.run('java -cp '+ StructCheck_jar + ';'+ cs_jar + ';./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
     case "linux":
-        os.system('javac -cp "'+ cs_jar + ':'+ StructCheck_jar + '" ./tests/StructChecks.java')
-        os.system('java -cp '+ StructCheck_jar + ':'+ cs_jar + ':./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
+        subprocess.run('javac -cp "'+ cs_jar + ':'+ StructCheck_jar + '" ./tests/StructChecks.java')
+        subprocess.run('java -cp '+ StructCheck_jar + ':'+ cs_jar + ':./ com.puppycrawl.tools.checkstyle.Main -c config.xml modelo')
     case default:
         print("ERROR: The laptop is running an operating system unaccounted for in this script")

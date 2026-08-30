@@ -20,10 +20,10 @@ public class Tienda {
 	// posRankingVendedor() y eliminaVendedor() para que utilicen las excepciones
 	// como mecanismo de notificacion de errores.
 	
-	/*
+	
 	@SuppressWarnings("serialized")
 	private class NombreYaExistente extends RuntimeException{}
-	*/
+	
 	
 	/**
 	 * Anhade un nuevo vendedor a la tienda.
@@ -31,10 +31,12 @@ public class Tienda {
 	 * @return true si el vendedor se ha anhadido
 	 *         false si ya habia un vendedor con el mismo nombre
 	 */
-	public boolean anhadeVendedor(Vendedor nuevoVendedor) 	{
+	public boolean anhadeVendedor(Vendedor nuevoVendedor) throws NombreYaExistente {
+		
 		if (buscaVendedor(nuevoVendedor.nombre()) != null) {
-			return false;
+			throw new NombreYaExistente();
 		}
+		
 		vendedores.add(nuevoVendedor);
 		return true;
 		
@@ -89,11 +91,13 @@ public class Tienda {
 	 * @return vendedor con ese nombre o null en caso de no existir ninguno
 	 */
 	public Vendedor buscaVendedor(String nombre) {
+		
 		for (Vendedor v: vendedores) {
 			if (v.nombre().equals(nombre)) {
 				return v;
 			}
 		}
+		
 		return null;
 	}
 	
