@@ -97,7 +97,8 @@ public abstract class CheckToken extends Check {
 		
 		for (DetailAST n: nodes) {
 			if (targetToken.name() == null || (targetToken.name() != null &&
-					identFinder(n).equalsIgnoreCase(targetToken.name())) || targetToken.type() == TokenTypes.METHOD_CALL)
+					identFinder(n).equalsIgnoreCase(targetToken.name())) ||
+					targetToken.type() == TokenTypes.METHOD_CALL)
 				violations.add(new Violation(n.getLineNo(), violationMessage()));
 		}
 

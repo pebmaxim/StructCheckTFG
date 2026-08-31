@@ -55,7 +55,8 @@ public class CheckStatementInMethod extends CheckTokenInMethod {
 	public CheckStatementInMethod(String methodName, String statementName, int statementType,
 			int statementCount) {
 		super(methodName, statementName, statementType,
-				"Method " + methodName + " should include a " + statementType);
+				"Method " + methodName + " should include a " +
+						statementType + " " + statementCount + " times");
 		this.statementCount = statementCount;
 	}
 
