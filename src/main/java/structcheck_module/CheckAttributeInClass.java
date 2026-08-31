@@ -21,8 +21,7 @@ public class CheckAttributeInClass extends CheckToken {
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();
-		SortedSet<Violation> violations = violationIfNotFindTarget();
-		return violations;
+		return violationIfNotFindTarget();
 	}
 
 }

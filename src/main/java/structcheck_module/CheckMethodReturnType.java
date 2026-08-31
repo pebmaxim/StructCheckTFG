@@ -37,8 +37,7 @@ public class CheckMethodReturnType extends CheckTokenInMethod{
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();
-		SortedSet<Violation> violations = checkReturnType();
-		return violations;
+		return checkReturnType();
 	}
 
 }

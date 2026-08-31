@@ -38,8 +38,7 @@ public class CheckMethodInMethod extends CheckTokenInMethod {
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();
-		SortedSet<Violation> violations = violationIfNotFindTarget();
-		return violations;
+		return violationIfNotFindTarget();
 	}
 
 }

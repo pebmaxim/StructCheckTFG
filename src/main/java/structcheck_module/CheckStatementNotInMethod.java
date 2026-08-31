@@ -60,8 +60,7 @@ public class CheckStatementNotInMethod extends CheckTokenInMethod {
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();
-		SortedSet<Violation> violations = violationIfFindTarget();
-		return violations;
+		return violationIfFindTarget();
 	}
 
 }

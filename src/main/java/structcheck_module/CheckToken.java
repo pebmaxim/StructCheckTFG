@@ -55,7 +55,7 @@ public abstract class CheckToken extends Check {
 	 * @return A SortedSet with a violation if the token was not found or an empty SortedSet otherwise.
 	 */
 	protected SortedSet<Violation> violationIfNotFindTarget() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
 		
 		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
 			nodes = methodCallFilter(nodes);
@@ -87,13 +87,13 @@ public abstract class CheckToken extends Check {
 	 * @return A SortedSet with violations for every token spotted or an empty SortedSet otherwise.
 	 */
 	protected SortedSet<Violation> violationIfFindTarget() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
 		
 		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
 			nodes = methodCallFilter(nodes);
 		}
 
-		SortedSet<Violation> violations = new TreeSet<Violation>();
+		SortedSet<Violation> violations = new TreeSet<>();
 		
 		for (DetailAST n: nodes) {
 			if (targetToken.name() == null || (targetToken.name() != null &&
@@ -110,7 +110,7 @@ public abstract class CheckToken extends Check {
 	 * @return a violation informing the user of the problem and the place to look in.
 	 */
 	protected SortedSet<Violation> checkReturnType() {
-		SortedSet<Violation> violations = new TreeSet<Violation>();
+		SortedSet<Violation> violations = new TreeSet<>();
 		if (baseNode().getType() != TokenTypes.METHOD_DEF) {
 			System.out.println("ERROR: You used checkReturnType in a CLASS_DEF node. Check your code.");
 			return null;
@@ -127,11 +127,11 @@ public abstract class CheckToken extends Check {
 	 * @return a violation informing the user of the problem and the place to look in
 	 */
 	protected SortedSet<Violation> checkExtends() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<DetailAST>(), baseNode());
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
 		String[] split = baseToken().name().split("\\.");
 		String name = split[split.length - 1];
 		
-		SortedSet<Violation> violations = new TreeSet<Violation>();
+		SortedSet<Violation> violations = new TreeSet<>();
 		violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
 		
 		for (DetailAST n: nodes) {
@@ -153,7 +153,7 @@ public abstract class CheckToken extends Check {
 		String[] split = targetToken().name().split("\\.");
 		String name = split[split.length - 1]; 
 		
-		HashSet<DetailAST> filteredNodes = new HashSet<DetailAST>();
+		HashSet<DetailAST> filteredNodes = new HashSet<>();
 		
 		for (DetailAST n: nodes) {
 			// The first child is either the method name or the dot in X.method
@@ -179,8 +179,8 @@ public abstract class CheckToken extends Check {
 	 */
 	private String identFinder(DetailAST node) {
 		DetailAST child = node.getFirstChild();
-		String ident = null;
-		while (child != null && ident == null) { // If child is null, that means we have no more siblings to check.
+		String ident = "Unidentified";
+		while (child != null && ident.equals("Unidentified")) { // If child is null, that means we have no more siblings to check.
 			if (child.getType() == TokenTypes.IDENT) {
 				ident = child.getText();
 				break;
