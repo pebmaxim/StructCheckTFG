@@ -22,7 +22,7 @@ public class Violation implements Comparable<Violation> {
 	 * Return the violation's line number
 	 * @return the violation's line number
 	 */
-	public int lineNo() {
+	public int getLineNo() {
 		return this.lineNo;
 	}
 	
@@ -30,12 +30,12 @@ public class Violation implements Comparable<Violation> {
 	 * Return the violation's log message
 	 * @return the violation's log message
 	 */
-	public String message() {
+	public String getMessage() {
 		return this.message;
 	}
 	
 	public int compareTo(Violation o) {
-		return lineNo - o.lineNo();
+		return lineNo - o.getLineNo();
 	}
 
 }

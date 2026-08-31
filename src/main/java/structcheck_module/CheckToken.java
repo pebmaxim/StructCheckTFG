@@ -27,7 +27,7 @@ public abstract class CheckToken extends Check {
 	/**
 	 * @return the targetToken
 	 */
-	public Token targetToken() {
+	public Token getTargetToken() {
 		return targetToken;
 	}
 
@@ -55,7 +55,7 @@ public abstract class CheckToken extends Check {
 	 * @return A SortedSet with a violation if the token was not found or an empty SortedSet otherwise.
 	 */
 	protected SortedSet<Violation> violationIfNotFindTarget() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), getBaseNode());
 		
 		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
 			nodes = methodCallFilter(nodes);
@@ -76,7 +76,7 @@ public abstract class CheckToken extends Check {
 		
 		SortedSet<Violation> violations = new TreeSet<Violation>();
 		if (nodes.isEmpty()) {
-			violations.add(new Violation(this.baseNode().getLineNo(), violationMessage()));		
+			violations.add(new Violation(this.getBaseNode().getLineNo(), getViolationMessage()));		
 		}
 		
 		return violations;
@@ -87,7 +87,7 @@ public abstract class CheckToken extends Check {
 	 * @return A SortedSet with violations for every token spotted or an empty SortedSet otherwise.
 	 */
 	protected SortedSet<Violation> violationIfFindTarget() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), getBaseNode());
 		
 		if (targetToken.type() == TokenTypes.METHOD_CALL) { // Identify whether the method calls found are the ones we're checking for
 			nodes = methodCallFilter(nodes);
@@ -99,7 +99,7 @@ public abstract class CheckToken extends Check {
 			if (targetToken.name() == null || (targetToken.name() != null &&
 					identFinder(n).equalsIgnoreCase(targetToken.name())) ||
 					targetToken.type() == TokenTypes.METHOD_CALL)
-				violations.add(new Violation(n.getLineNo(), violationMessage()));
+				violations.add(new Violation(n.getLineNo(), getViolationMessage()));
 		}
 
 		return violations;
@@ -111,13 +111,13 @@ public abstract class CheckToken extends Check {
 	 */
 	protected SortedSet<Violation> checkReturnType() {
 		SortedSet<Violation> violations = new TreeSet<>();
-		if (baseNode().getType() != TokenTypes.METHOD_DEF) {
+		if (getBaseNode().getType() != TokenTypes.METHOD_DEF) {
 			System.out.println("ERROR: You used checkReturnType in a CLASS_DEF node. Check your code.");
 			return null;
 		}
-		DetailAST type = baseNode().findFirstToken(TokenTypes.TYPE);
+		DetailAST type = getBaseNode().findFirstToken(TokenTypes.TYPE);
 		if (!type.getFirstChild().getText().equalsIgnoreCase(targetToken.name())) {
-			violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
+			violations.add(new Violation(getBaseNode().getLineNo(), getViolationMessage()));
 		}
 		return violations;
 	}
@@ -127,12 +127,12 @@ public abstract class CheckToken extends Check {
 	 * @return a violation informing the user of the problem and the place to look in
 	 */
 	protected SortedSet<Violation> checkExtends() {
-		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), baseNode());
-		String[] split = baseToken().name().split("\\.");
+		Set<DetailAST> nodes = findTargetToken(new HashSet<>(), getBaseNode());
+		String[] split = getBaseToken().name().split("\\.");
 		String name = split[split.length - 1];
 		
 		SortedSet<Violation> violations = new TreeSet<>();
-		violations.add(new Violation(baseNode().getLineNo(), violationMessage()));
+		violations.add(new Violation(getBaseNode().getLineNo(), getViolationMessage()));
 		
 		for (DetailAST n: nodes) {
 			if (n.getPreviousSibling().getText().equals(name)) {
@@ -150,7 +150,7 @@ public abstract class CheckToken extends Check {
 	 */
 	private Set<DetailAST> methodCallFilter(Set<DetailAST> nodes) {
 		// Separating method name from its class
-		String[] split = targetToken().name().split("\\.");
+		String[] split = getTargetToken().name().split("\\.");
 		String name = split[split.length - 1]; 
 		
 		HashSet<DetailAST> filteredNodes = new HashSet<>();

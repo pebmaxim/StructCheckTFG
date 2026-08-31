@@ -70,7 +70,7 @@ public class CheckStatementInMethod extends CheckTokenInMethod {
 		int statementsFound = violations.size();
 		violations.clear();
 		if (statementsFound != statementCount) {
-			violations.add(new Violation(this.baseNode().getLineNo(), violationMessage()));
+			violations.add(new Violation(getBaseNode().getLineNo(), getViolationMessage()));
 		}
 		return violations;
 	}

@@ -8,7 +8,7 @@ public class StructChecks {
 	public static final Check[] checks = {
 			// metodo Tienda.anhadeVendedor
 			new CheckStatementInMethod("Tienda.anhadeVendedor",
-					TokenTypes.LITERAL_IF, 2),
+					TokenTypes.LITERAL_IF, 1),
 			new CheckStatementInMethod("Tienda.anhadeVendedor", "NombreYaExistente",
 					TokenTypes.LITERAL_THROWS, 1,
 					"El metodo debe indicar que podria lanzar la excepcion " +

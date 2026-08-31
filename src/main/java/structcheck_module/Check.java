@@ -35,7 +35,7 @@ public abstract class Check {
 	/**
 	 * @return the baseToken
 	 */
-	public Token baseToken() {
+	public Token getBaseToken() {
 		return baseToken;
 	}
 	
@@ -58,14 +58,14 @@ public abstract class Check {
 	 * Returns the message describing the violation of the check.
 	 * @return the message describing the violation of the check.
 	 */
-	public String violationMessage() {
+	public String getViolationMessage() {
 		return violationMessage;
 	}
 
 	/**
 	 * @return the baseNode
 	 */
-	public DetailAST baseNode() {
+	public DetailAST getBaseNode() {
 		return baseNode;
 	}
 
