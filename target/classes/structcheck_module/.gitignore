@@ -1,0 +1,12 @@
+/Check.class
+/CheckAttributeInClass.class
+/CheckClassExtends.class
+/CheckMethodInMethod.class
+/CheckMethodNotInMethod.class
+/CheckMethodReturnType.class
+/CheckStatementInMethod.class
+/CheckStatementNotInMethod.class
+/CheckToken.class
+/CheckTokenInMethod.class
+/StructCheckMain.class
+/Violation.class

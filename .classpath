@@ -38,6 +38,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/goges/eclipse-workspace/StructCheckSQ/src/main/java/checkstyle-10.21.2-all.jar"/>
+	<classpathentry kind="lib" path="./src/main/java/checkstyle-10.21.2-all.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
