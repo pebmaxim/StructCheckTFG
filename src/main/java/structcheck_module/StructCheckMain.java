@@ -33,7 +33,7 @@ public class StructCheckMain extends AbstractCheck {
 		int[] tokens = new int[checks.length];
 		int i = 0;
 		for (Check check: checks) {
-			tokens[i] = check.baseToken().type();
+			tokens[i] = check.getBaseToken().type();
 			i++;
 		}
 		return tokens;
@@ -50,8 +50,8 @@ public class StructCheckMain extends AbstractCheck {
 			if (check.checkCleared()) {
 				continue;
 			}
-			int checkType = check.baseToken().type();
-			String[] checkName = check.baseToken().name().split("\\."); // Separate the method from the class it belongs to
+			int checkType = check.getBaseToken().type();
+			String[] checkName = check.getBaseToken().name().split("\\."); // Separate the method from the class it belongs to
 			if (astType == checkType) { // If the AST and the check aren't looking in the same place, we should move on.
 				SortedSet<Violation> violations = new TreeSet<Violation>();
 				// Might not be necessary to use switch
@@ -60,22 +60,25 @@ public class StructCheckMain extends AbstractCheck {
 						if (astText.equals(checkName[0])) {
 							check.setBaseNode(ast);
 							violations.addAll(check.process());
-							break;
 						}
+						break;
 					case(TokenTypes.METHOD_DEF):
 						// If the ast is a method, this gives us the identification of the class it belongs to.
 						String astFather = ast.getParent().getPreviousSibling().getText();
 						if (astFather.equals(checkName[0]) && astText.equals(checkName[1])) {
 							check.setBaseNode(ast);
 							violations.addAll(check.process());
-							break;
 						}
+						break;
+					default:
+						log(0,"Unexpected root token type.");
+						break;
 				}
 				/*
 				 * Loads all the violations to be printed in the terminal.
 				 */
 				for (Violation violation: violations) {
-					log(violation.lineNo(), violation.message());
+					log(violation.getLineNo(), violation.getMessage());
 				}
 			}
 					

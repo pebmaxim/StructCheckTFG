@@ -38,8 +38,7 @@ public class CheckClassExtends extends CheckToken{
 	@Override
 	public SortedSet<Violation> process() {
 		super.process();
-		SortedSet<Violation> violations = checkExtends();
-		return violations;
+		return checkExtends();
 	}
 
 }
