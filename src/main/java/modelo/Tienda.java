@@ -32,9 +32,9 @@ public class Tienda {
 	 * @return true si el vendedor se ha anhadido
 	 *         false si ya habia un vendedor con el mismo nombre
 	 */
-	public boolean anhadeVendedor(Vendedor nuevoVendedor) throws NombreYaExistente {
+	public boolean anhadeVendedor(Vendedor nuevoVendedor) {
 		
-		if (buscaVendedor(nuevoVendedor.nombre()) != null) {
+		if (false) {
 			throw new NombreYaExistente();
 		}
 		
